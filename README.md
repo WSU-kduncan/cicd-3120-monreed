@@ -20,4 +20,8 @@
         * `-p` specifies port to bind "80:80"
         * `--name` specifies container name "httpd"
         
-4. Open browser and visit `localhost:80` to view homepage up and running. 
+4. Open browser and visit `localhost:80` to view homepage up and running.
+
+
+## Part 2 - GitHub Actions and DockerHub
+
