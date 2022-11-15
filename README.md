@@ -7,17 +7,17 @@
 2. `vim DockerFile` > & append contents ...
 
     ```
-    FROM ubuntu
-    RUN apt update
-    RUN apt install -y apache2
-    RUN apt install -y apache2-utils
-    RUN apt clean
-    EXPOSE 80
-    CMD [“apache2ctl”, “-D”, “FOREGROUND”]
+    FROM httpd:2.4
+    COPY ./website/ /usr/local/apache2/htdocs/
     ```
  
-3. `docker run --name mywebserver -d -p 80:80 webserver-image` to run the container image, where ...
-    - `-d` runs in detached mode
-    - `-p` to specify which port we want available / to bind to
+3. While in `cicd-3120-monreed/` run:
+    * `docker build -t webserver .` where ...
     
+        * `-t` tags the image "webserver" 
+    * `docker run -d --name httpd -p 80:80 webserver` where ...
+    
+        * `-d` runs in detached mode
+        * `-p` specifies port to bind "80:80"
+        * `--name` specifies container name "httpd"
 4. 
