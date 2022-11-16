@@ -25,3 +25,14 @@
 
 ## Part 2 - GitHub Actions and DockerHub
 
+1. To create a `public repository` in DockerHub ... 
+
+    > ![image](https://user-images.githubusercontent.com/97551273/202257389-1cbc0e49-3d7c-47b9-97ee-c4743fe3ab3f.png)
+
+    > ![image](https://user-images.githubusercontent.com/97551273/202257476-2be0ecd3-84c8-43e1-8292-2d22bd55eaf6.png)
+    
+    > ![image](https://user-images.githubusercontent.com/97551273/202257839-9ce40170-d6b7-4770-9618-2e3fee925ce9.png)
+
+    > ![image](https://user-images.githubusercontent.com/97551273/202257558-1c2d849f-2648-4af5-b1b5-6cb42549da62.png)
+
+    > ![image](https://user-images.githubusercontent.com/97551273/202257616-bff818d2-1611-4864-8be1-e5ab456d8de2.png)
