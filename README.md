@@ -73,7 +73,18 @@
 ---
 
 5. #### Behavior of GitHub Workflow
-* What it does ...
-* When it does it ...
-* Custom variables include ...
-Lecture 11/16 11:26
+* *What it does ...*
+    * This workflow aids in **publishing images** to Dockerhub. 
+    
+    * It uses the Dockerhub `login-action` and `build-push-action` to build a Docker image and push it to Dockerhub if it is successfully built. 
+    
+    * The `login-action` requires username and password variables, preferably stored as secrets in GitHub. This is the workflow's way of **authenticating** the correct user for Dockerhub and to know where to push the image to. 
+    
+    * The `build-push-action` option requires a new image with format `docker-hub-namespace/docker-hub-repo:version`. After creation, if `push` is set to true, the new image will be published to Dockerhub.     
+* *When it does it ...*
+    * Every time a new release of your image is detected in your GitHub repository, this workflow is triggered to publish that image to Dockerhub. 
+    
+    * Specifically, event `release` is triggered by event `create`.
+* *Custom variables include ...* 
+
+    * If this template were to be reused, or used by somebody else, the login variables may need to be adjusted. In our GitHub secrets, we specified `DOCKER_USERNAME` and `DOCKER_PASSWORD` which matches up with the workflow template. However, if the secrets are labeled alternatively, this may need adjusted.   
