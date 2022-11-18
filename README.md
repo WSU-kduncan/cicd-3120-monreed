@@ -68,23 +68,27 @@
 
     > ![image](https://user-images.githubusercontent.com/97551273/202266628-8f60cd87-a6c2-4bfe-ae98-cd14749425c8.png)
 
-  * Establish secrets `DOCKER_USERNAME` and `DOCKER_PASSWORD` with respective contents. 
+  * Establish secrets `DOCKER_USERNAME` and `DOCKER_TOKEN` with respective contents. 
 
 ---
 
 5. #### Behavior of GitHub Workflow
 * *What it does ...*
-    * This workflow aids in **publishing images** to Dockerhub. 
+    * This workflow builds and pushes images to Dockerhub, while authenticating with your Dockerhub username & Dockerhub access token.
     
-    * It uses the Dockerhub `login-action` and `build-push-action` to build a Docker image and push it to Dockerhub if it is successfully built. 
+    *  First, a `checkout` (v3) is carried out.  
     
-    * The `login-action` requires username and password variables, preferably stored as secrets in GitHub. This is the workflow's way of **authenticating** the correct user for Dockerhub and to know where to push the image to. 
+    *  Then, optionally, I chose to have `ls` run to list the contents.
     
-    * The `build-push-action` option requires a new image with format `docker-hub-namespace/docker-hub-repo:version`. After creation, if `push` is set to true, the new image will be published to Dockerhub.     
+    *  Next, `login-action` (v2) is ran to log user into Dockerhub through the use of variables/secrets `DOCKER_USERNAME` & `DOCKER_TOKEN`.
+
+    *  Then, Docker Buildx is configured using `setup-buildx-action` (v2). 
+
+    *  Next, build and push actions are carried out using `build-push-action` (v3). This is done via the use of the content within file `./Dockerfile`, setting variable `push` to true, and tagging through the use of variables `DOCKER_USERNAME` and `/repo-name-here:latest`. 
 * *When it does it ...*
-    * Every time a new release of your image is detected in your GitHub repository, this workflow is triggered to publish that image to Dockerhub. 
+    * `on: push:` meaning, this workflow is triggered whenever a `git push` is ran for this repository. 
     
-    * Specifically, event `release` is triggered by event `create`.
 * *Custom variables include ...* 
 
-    * If this template were to be reused, or used by somebody else, the login variables may need to be adjusted. In our GitHub secrets, we specified `DOCKER_USERNAME` and `DOCKER_PASSWORD` which matches up with the workflow template. However, if the secrets are labeled alternatively, this may need adjusted.   
+    * For this template to be used by someone else, variable names `DOCKER_USERNAME` and `DOCKER_TOKEN` may have to be adjusted to match what is in GitHub.
+    * Additionally, the repository tag included in the very last line of the workflow file will need to be adjusted to match the individual user's repository. 
