@@ -2,6 +2,7 @@ name: Docker Build Push
 
 on:
   push:
+  workflow_dispatch:   
 
 jobs:
   build-and-push:
