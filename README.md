@@ -92,3 +92,14 @@
 
     * For this template to be used by someone else, variable names `DOCKER_USERNAME` and `DOCKER_TOKEN` may have to be adjusted to match what is in GitHub.
     * Additionally, the repository tag included in the very last line of the workflow file will need to be adjusted to match the individual user's repository. 
+
+## Part 3 - Deployment 
+* Description of Container Restart Script:
+
+    * `docker stop site` - To end the running process of our current image, **site**.
+    * `docker rm site` - To safely remove the container image.
+    * `docker pull momankhoney/my-first-repo:latest` - To pull the newest/latest version of the target container from the target repository. 
+    * `docker run -d -p 8080:80 --name site momankhoney/my-first-repo` - To run the latest version of the container on port 80 in detached mode with name "site". 
+    * **Optional:** add `docker ps -a` to output processes as they run to see what is happening when upon script execution. 
+ * Notes // `refresh.sh` requires `chmod u+x` and will be executed like so: `sudo ./refresh.sh` 
+ * 
