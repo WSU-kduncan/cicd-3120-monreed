@@ -46,4 +46,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+          ${{ secrets.DOCKER_USERNAME }}/my-first-repo:latest  
+          ${{ steps.meta.outputs.tags }}
