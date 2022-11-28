@@ -28,10 +28,13 @@ jobs:
         uses: docker/setup-buildx-action@v2
       -
         name: Tag Info
+        id: meta 
         uses: docker/setup-buildx-action@v2
         with: 
-          images: 
+          images: | 
             momankhoney/my-first-repo
+          flavor: |
+            latest=auto  
           tags:
             type=ref,event=branch
             type=semver,pattern={{major}}.{{minor}}
