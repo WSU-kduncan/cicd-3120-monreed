@@ -3,10 +3,10 @@ name: Docker Build Push
 on:
   push:
     tags:
-      - "v*.*"
+      - "v*.*.*"
     branch: 
+      - "master"
   workflow_dispatch:         
-
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -35,7 +35,7 @@ jobs:
             momankhoney/my-first-repo
           flavor: |
             latest=auto  
-          tags:
+          tags: |
             type=ref,event=branch
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
