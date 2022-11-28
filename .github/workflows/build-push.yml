@@ -32,9 +32,7 @@ jobs:
         uses: docker/metadata-action@v4
         with: 
           images: | 
-            momankhoney/my-first-repo
-          flavor: |
-            latest=auto  
+            momankhoney/my-first-repo  
           tags: |
             type=ref,event=branch
             type=semver,pattern={{major}}.{{minor}}
