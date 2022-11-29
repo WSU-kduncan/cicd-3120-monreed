@@ -101,14 +101,15 @@
 
 * `docker pull momankhoney/my-first-repo:latest` - To pull the newest/latest version of the target container from the target repository. 
 
-* `docker run -d -p 8080:80 --name site momankhoney/my-first-repo` - To run the latest version of the container on port 80 in detached mode with name "site". 
+* `docker run -d --restart unless-stopped -p 8080:80 --name site momankhoney/my-first-repo` - To run the latest version of the container on port 80 in detached mode with name "site". Flag `--restart` allows it to keep running while instance is active and `unless-stopped` tells it to keep going unless we actually tell it to "docker stop". 
+
     * **Optional:** add `docker ps -a` to output processes as they run to see what is happening when upon script execution. 
     
  * Notes // `refresh.sh` requires `chmod u+x` and will be executed like so: `sudo ./refresh.sh`
  
  ### Configuration of Webhook 
  
- 1. #### Install Webhooks with Go 
+ #### Install Webhooks with Go 
  * `wget https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz` to download the Go installer file 
  
  * `sudo tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz` to extract what you just downloaded into /usr/local & create a fresh Go tree in /usr/local/go
@@ -129,6 +130,17 @@
 ]
 ```
 * `/home/ubuntu/go/bin/webhook -hooks /home/ubuntu/hooks.json -verbose` to run webhook
+#### On Dockerhub ...
+> ![image](https://user-images.githubusercontent.com/97551273/204439358-cc1e62af-7ecb-48ed-9afa-dcf08db0a268.png)
+
+> ![image](https://user-images.githubusercontent.com/97551273/204439415-31b84b57-f82f-4915-bcda-3aa4ecd77fe9.png)
+
+> ![image](https://user-images.githubusercontent.com/97551273/204439424-20a0f940-e2cc-4545-98d8-cceef0f2a3f2.png)
+
+> ![image](https://user-images.githubusercontent.com/97551273/204439444-f29ae416-87b5-4af9-93ad-09faf9c15041.png)
+
+> ![image](https://user-images.githubusercontent.com/97551273/204439530-af718a31-38fb-41e6-86a7-4eb23cce53d5.png)
+
 
 #### On a separate terminal of the same instance, run:
 
@@ -147,7 +159,8 @@ webhook   20536 20542 webhook             ubuntu    6u     IPv6              667
 ```
 * `curl 34.194.112.9:9000/hooks/honey`
 
-#### Keeping it running 24/7
+#### Create Systemd Service
+
 * `cd /etc/systemd/system`
 * `sudo vim webhook.service` & append:
 ```
