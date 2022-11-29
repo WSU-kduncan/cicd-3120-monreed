@@ -94,12 +94,75 @@
     * Additionally, the repository tag included in the very last line of the workflow file will need to be adjusted to match the individual user's repository. 
 
 ## Part 3 - Deployment 
-* Description of Container Restart Script:
+### Description of Container Restart Script
+* `docker stop site` - To end the running process of our current image, **site**.
 
-    * `docker stop site` - To end the running process of our current image, **site**.
-    * `docker rm site` - To safely remove the container image.
-    * `docker pull momankhoney/my-first-repo:latest` - To pull the newest/latest version of the target container from the target repository. 
-    * `docker run -d -p 8080:80 --name site momankhoney/my-first-repo` - To run the latest version of the container on port 80 in detached mode with name "site". 
+* `docker rm site` - To safely remove the container image.
+
+* `docker pull momankhoney/my-first-repo:latest` - To pull the newest/latest version of the target container from the target repository. 
+
+* `docker run -d -p 8080:80 --name site momankhoney/my-first-repo` - To run the latest version of the container on port 80 in detached mode with name "site". 
     * **Optional:** add `docker ps -a` to output processes as they run to see what is happening when upon script execution. 
- * Notes // `refresh.sh` requires `chmod u+x` and will be executed like so: `sudo ./refresh.sh` 
- * 
+    
+ * Notes // `refresh.sh` requires `chmod u+x` and will be executed like so: `sudo ./refresh.sh`
+ 
+ ### Configuration of Webhook 
+ 
+ 1. #### Install Webhooks with Go 
+ * `wget https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz` to download the Go installer file 
+ 
+ * `sudo tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz` to extract what you just downloaded into /usr/local & create a fresh Go tree in /usr/local/go
+ 
+ * `export PATH=$PATH:/usr/local/go/bin` to add /usr/local/go/bin to the PATH environment variable
+
+    * `go version` to confirm successful installation & verify version 
+   
+ * `go install github.com/adnanh/webhook@latest` to install the latest webhook version 
+ * `vim hooks.json` and append:
+ ```
+ [
+  {
+    "id": "redeploy-webhook",
+    "execute-command": "/var/scripts/redeploy.sh",
+    "command-working-directory": "/var/webhook"
+  }
+]
+```
+* `/home/ubuntu/go/bin/webhook -hooks /home/ubuntu/hooks.json -verbose` to run webhook
+
+#### On a separate terminal of the same instance, run:
+
+* `sudo lsof | grep LISTEN` results below: 
+```
+sshd        659                             root    3u     IPv4              24017      0t0        TCP *:ssh (LISTEN)
+sshd        659                             root    4u     IPv6              24028      0t0        TCP *:ssh (LISTEN)
+systemd-r  5581                  systemd-resolve   13u     IPv4              43871      0t0        TCP localhost:domain (LISTEN)
+webhook   20536                           ubuntu    6u     IPv6              66753      0t0        TCP *:9000 (LISTEN)
+webhook   20536 20537 webhook             ubuntu    6u     IPv6              66753      0t0        TCP *:9000 (LISTEN)
+webhook   20536 20538 webhook             ubuntu    6u     IPv6              66753      0t0        TCP *:9000 (LISTEN)
+webhook   20536 20539 webhook             ubuntu    6u     IPv6              66753      0t0        TCP *:9000 (LISTEN)
+webhook   20536 20540 webhook             ubuntu    6u     IPv6              66753      0t0        TCP *:9000 (LISTEN)
+webhook   20536 20541 webhook             ubuntu    6u     IPv6              66753      0t0        TCP *:9000 (LISTEN)
+webhook   20536 20542 webhook             ubuntu    6u     IPv6              66753      0t0        TCP *:9000 (LISTEN)
+```
+* `curl 34.194.112.9:9000/hooks/honey`
+
+#### Keeping it running 24/7
+* `cd /etc/systemd/system`
+* `sudo vim webhook.service` & append:
+```
+[Unit]
+Description=Webhook Service in Go 
+After=multi-user.target 
+
+[Service]
+ExecStart=/home/ubuntu/go/bin/webhook -hooks /home/ubuntu/hooks.json
+Type=simple
+
+[Install]
+WantedBy=multi-user.target                                                                                                
+```
+* `sudo systemctl daemon-reload`
+* `sudo systemctl enable webhook.service`
+* `systemctl status webhook.service`
+* `sudo systemctl start webhook.service`
