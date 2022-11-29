@@ -162,7 +162,7 @@ Type=simple
 [Install]
 WantedBy=multi-user.target                                                                                                
 ```
-* `sudo systemctl daemon-reload`
-* `sudo systemctl enable webhook.service`
-* `systemctl status webhook.service`
-* `sudo systemctl start webhook.service`
+* `sudo systemctl daemon-reload` to refresh changes
+* `sudo systemctl enable webhook.service` to enable your webhook uptime service 
+* `systemctl status webhook.service` to check on the status of your service and see if it is active or not
+* `sudo systemctl start webhook.service` to start your service 
