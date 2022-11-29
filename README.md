@@ -107,19 +107,22 @@
     
  * Notes // `refresh.sh` requires `chmod u+x` and will be executed like so: `sudo ./refresh.sh`
  
+ ---
+
  ### Configuration of Webhook 
  
- #### Install Webhooks with Go 
- * `wget https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz` to download the Go installer file 
+ 1. **Install Go** 
+* `wget https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz` to download the Go installer file 
  
- * `sudo tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz` to extract what you just downloaded into /usr/local & create a fresh Go tree in /usr/local/go
+* `sudo tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz` to extract what you just downloaded into /usr/local & create a fresh Go tree in /usr/local/go
  
- * `export PATH=$PATH:/usr/local/go/bin` to add /usr/local/go/bin to the PATH environment variable
+* `export PATH=$PATH:/usr/local/go/bin` to add /usr/local/go/bin to the PATH environment variable
 
     * `go version` to confirm successful installation & verify version 
    
- * `go install github.com/adnanh/webhook@latest` to install the latest webhook version 
- * `vim hooks.json` and append:
+2. **Install Webhooks using Go**
+* `go install github.com/adnanh/webhook@latest` to install the latest webhook version 
+* `vim hooks.json` and append:
  ```
  [
   {
@@ -130,7 +133,7 @@
 ]
 ```
 * `/home/ubuntu/go/bin/webhook -hooks /home/ubuntu/hooks.json -verbose` to run webhook
-#### On Dockerhub ...
+3. **On Dockerhub ...**
 > ![image](https://user-images.githubusercontent.com/97551273/204439358-cc1e62af-7ecb-48ed-9afa-dcf08db0a268.png)
 
 > ![image](https://user-images.githubusercontent.com/97551273/204439415-31b84b57-f82f-4915-bcda-3aa4ecd77fe9.png)
@@ -157,7 +160,9 @@ webhook   20536 20540 webhook             ubuntu    6u     IPv6              667
 webhook   20536 20541 webhook             ubuntu    6u     IPv6              66753      0t0        TCP *:9000 (LISTEN)
 webhook   20536 20542 webhook             ubuntu    6u     IPv6              66753      0t0        TCP *:9000 (LISTEN)
 ```
-* `curl 34.194.112.9:9000/hooks/honey`
+* `curl 34.194.112.9:9000/hooks/honey` to test if the webhook will catch the connection 
+
+---
 
 #### Create Systemd Service
 
