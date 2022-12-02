@@ -1,0 +1,8 @@
+[
+  {
+    "id": "honey",
+    "execute-command": "/home/ubuntu/refresh.sh",
+    "command-working-directory": "/var/webhook"
+  }
+]
+
