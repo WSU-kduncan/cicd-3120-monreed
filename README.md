@@ -122,12 +122,12 @@
    
 2. **Install Webhooks using Go**
 * `go install github.com/adnanh/webhook@latest` to install the latest webhook version 
-* `vim hooks.json` and append:
+* `vim hooks.json` and append personalized content:
  ```
  [
   {
-    "id": "redeploy-webhook",
-    "execute-command": "/var/scripts/redeploy.sh",
+    "id": "honey",
+    "execute-command": "/home/ubuntu/refresh.sh",
     "command-working-directory": "/var/webhook"
   }
 ]
