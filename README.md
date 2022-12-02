@@ -184,3 +184,9 @@ WantedBy=multi-user.target
 * `sudo systemctl enable webhook.service` to enable your webhook uptime service 
 * `systemctl status webhook.service` to check on the status of your service and see if it is active or not
 * `sudo systemctl start webhook.service` to start your service 
+
+## Part 4 - Diagramming
+### Below is my flowchart for `continuous deployment`, based off of my workflow & steps taken to retrieve the latest version. 
+
+
+> ![Continuous-Deployment-Flowchart](https://github.com/WSU-kduncan/cicd-3120-monreed/blob/main/ContinuousDeployment.pdf)
