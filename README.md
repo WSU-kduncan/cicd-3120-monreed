@@ -189,4 +189,4 @@ WantedBy=multi-user.target
 ### Below is my flowchart for `continuous deployment`, based off of my workflow & steps taken to retrieve the latest version. 
 
 
-> ![continuous-deployment]
+> ![continuous-deployment](https://github.com/WSU-kduncan/cicd-3120-monreed/blob/main/flowchart.png)
